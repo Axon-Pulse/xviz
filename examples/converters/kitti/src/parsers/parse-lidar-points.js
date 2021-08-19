@@ -41,7 +41,7 @@ export function loadLidarData(data) {
   const colors = new Array(size);
 
   for (let i = 0; i < size; i++) {
-    positions[i] = float.subarray(i * 4, i * 4 + 3);
+    positions[i] = float.subarray(i * 4 , i * 4 + 3);
 
     const reflectance = Math.min(float[i * 4 + 3], 3);
     colors[i] = [80 + reflectance * 80, reflectance * 80, reflectance * 60];

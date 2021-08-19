@@ -65,8 +65,17 @@ if [ "$force_xviz_conversion" = "true" ] || ([ ! -f "${OUTPUT_DIR}/1-frame.json"
     (cd "${SCRIPT_DIR}/../examples/converters/kitti" && yarn && yarn start -d ${INPUT_DIR} -o "${OUTPUT_DIR}")
 fi
 
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+
+show_help() {
+  echo " -h display help information"
+  echo " -f force KITTI xviz conversion"
+}
+
 # Start server & web app
-cd "${SCRIPT_DIR}/../modules/server" && ./bin/xvizserver -d "${OUTPUT_DIR}" --port 8081 &
+cd "${SCRIPT_DIR}/../modules/server" && ./bin/xvizserver -d "/home/fl/barak/axon-car-demo/testtest/AutomotiveGui/xviz/data/generated/arbe/arbe-rosbag_2020-12-29-13-34-50_processedd_10" --port 8081 &
 pids[1]=$!
 
 echo "##"

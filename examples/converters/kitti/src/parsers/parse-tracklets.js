@@ -38,7 +38,7 @@ function parseObjectMetadata(tracklets) {
       length: Number(item.l)
     };
 
-    const bounds = [
+    const bounds = [ //TODO:needs to be done each frame
       [-item.l / 2, -item.w / 2, 0],
       [-item.l / 2, item.w / 2, 0],
       [item.l / 2, item.w / 2, 0],
