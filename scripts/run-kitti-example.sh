@@ -55,18 +55,18 @@ trap exit_script SIGINT SIGTERM
 
 # Run KITTI XVIZ conversion
 # check for both json & glb files
-INPUT_DIR="${SCRIPT_DIR}/../data/Arbe/arbe-rosbag_2020-12-29-13-34-50_processedd_10"
-OUTPUT_DIR="${SCRIPT_DIR}/../data/generated/arbe/arbe-rosbag_2020-12-29-13-34-50_processedd_10"
+INPUT_DIR="${SCRIPT_DIR}/../data/kitti/2011_09_26/2011_09_26_drive_0005_sync"
+OUTPUT_DIR="${SCRIPT_DIR}/../data/generated/kitti/2011_09_26/2011_09_26_drive_0005_sync"
 
 
-if [ "$force_xviz_conversion" = "true" ] || ([ ! -f "${OUTPUT_DIR}/1-frame.json" ] && [ ! -f "${OUTPUT_DIR}/1-frame.glb" ]) ; then
+if [ "$force_xviz_conversion" = "false" ] || ([ ! -f "${OUTPUT_DIR}/1-frame.json" ] && [ ! -f "${OUTPUT_DIR}/1-frame.glb" ]) ; then
     echo "Generating default KITTI XVIZ data"
     mkdir -p "${OUTPUT_DIR}"
     (cd "${SCRIPT_DIR}/../examples/converters/kitti" && yarn && yarn start -d ${INPUT_DIR} -o "${OUTPUT_DIR}")
 fi
 
 # Start server & web app
-cd "${SCRIPT_DIR}/../modules/server" && ./bin/xvizserver -d "${OUTPUT_DIR}" --port 8081 &
+cd "${SCRIPT_DIR}/../modules/server" && ./bin/xvizserver -d "${OUTPUT_DIR}" --port 8082 &
 pids[1]=$!
 
 echo "##"

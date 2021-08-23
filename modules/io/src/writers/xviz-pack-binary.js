@@ -83,7 +83,7 @@ function flattenObject(key, object) {
     typedArray = flattenToTypedArray(object, size, Float32Array);
   }
   if (key === 'colors') {
-    size = object[0].length === 4 ? 4 : 3;
+    size = object[0]?.length === 4 ? 4 : 3;
     typedArray = flattenToTypedArray(object, size, Uint8Array);
   }
 

@@ -43,8 +43,29 @@ export function loadLidarData(data) {
   for (let i = 0; i < size; i++) {
     positions[i] = float.subarray(i * 4 , i * 4 + 3);
 
-    const reflectance = Math.min(float[i * 4 + 3], 3);
-    colors[i] = [80 + reflectance * 80, reflectance * 80, reflectance * 60];
+    // const reflectance = Math.min(float[i * 4 + 3], 3);
+    // colors[i] = [80 + reflectance * 80, reflectance * 80, reflectance * 60];
+    colors[i] = [221,221,221];
   }
+
+
+
+//   let x ='';
+//   let y ='';
+// //  let z = '';
+//   for (let i = 0; i < size; i++) {
+//     positions[i] = float.subarray(i * 4 , i * 4 + 3);
+//     const reflectance = Math.min(float[i * 4 + 3], 3);
+//     colors[i] = [80 + reflectance * 80, reflectance * 80, reflectance * 60];    
+//      x= positions[i][0];
+//     //     y= positions[i][1];
+//     //    z= positions[i][2];
+//      positions[i][0]=y;
+//      positions[i][1]=x;
+//  }
+
+
+
+
   return {positions, colors};
 }

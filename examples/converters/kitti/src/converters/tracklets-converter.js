@@ -33,7 +33,7 @@ export default class TrackletsConverter {
     // http://www.cvlibs.net/datasets/kitti/setup.php
     this.FIXTURE_TRANSFORM_POSE = {
       x: 0.81,
-      y: -0.32,
+      y: -5.32,
       z: 1.73
     };
 
@@ -94,22 +94,29 @@ export default class TrackletsConverter {
       xvizBuilder
         .primitive(this.TRACKLETS)
         .polygon(tracklet.vertices)
-        .classes([tracklet.objectType])
+        .classes(tracklet.label) // TODO: Each pose has label 
         .style({
           height: tracklet.height
         })
-        .id(tracklet.id);
+        .id(`${tracklet.label} ${tracklet.id}`);
 
       xvizBuilder
         .primitive(this.TRACKLETS_TRACKING_POINT)
         .circle([tracklet.x, tracklet.y, tracklet.z])
+        //.position([tracklet.x, tracklet.y,  tracklet.z+1])
+        //.text(tracklet.label)
+        // .classes("icon-car")
+        // //\e916
         .id(tracklet.id);
-
+      //console.log(tracklet.label)
       xvizBuilder
         .primitive(this.TRACKLETS_LABEL)
         // float above the object
-        .position([tracklet.x, tracklet.y, tracklet.z + 2])
-        .text(tracklet.id.slice(24));
+        .position([tracklet.x, tracklet.y, tracklet.z + 3])
+        // .text(tracklet.id.slice(24));
+        .text(tracklet.label);
+        
+        
     });
 
     // object is in this frame
@@ -142,15 +149,15 @@ export default class TrackletsConverter {
         extruded: true,
         fill_color: '#00000080'
       })
-      .styleClass('Car', {
+      .styleClass('Vehicles', {
         fill_color: '#50B3FF80',
         stroke_color: '#50B3FF'
       })
-      .styleClass('Cyclist', {
+      .styleClass('2Wheels', {
         fill_color: '#957FCE80',
         stroke_color: '#957FCE'
       })
-      .styleClass('Pedestrian', {
+      .styleClass('Walkers', {
         fill_color: '#FFC6AF80',
         stroke_color: '#FFC6AF'
       })
@@ -158,7 +165,7 @@ export default class TrackletsConverter {
         fill_color: '#5B91F480',
         stroke_color: '#5B91F4'
       })
-      .styleClass('Unknown', {
+      .styleClass('Shit', {
         fill_color: '#E2E2E280',
         stroke_color: '#E2E2E2'
       })
@@ -208,21 +215,24 @@ export default class TrackletsConverter {
           ? object.data.poses.item[poseIndex]
           : object.data.poses.item;
 
-        const {tx, ty, tz, rx, ry, rz} = pose;
+        const {tx, ty, tz, rx, ry, rz, label} = pose;
 
-        const poseProps = {
+        const poseProps = { //TODO: add label from each pose
+          label: label,
           x: Number(tx),
           y: Number(ty),
           z: Number(tz),
           roll: Number(rx),
           pitch: Number(ry),
-          yaw: Number(rz)
+          yaw: Number(rz),
         };
+
+
 
         return {
           ...object,
           ...poseProps,
-          vertices: getRelativeCoordinates(object.bounds, poseProps)
+          vertices: getRelativeCoordinates(object.bounds, poseProps) //TODO: each pose has fresh bounds
         };
       });
   }

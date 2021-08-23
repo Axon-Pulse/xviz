@@ -90,10 +90,11 @@ export default class FutureTrackletsConverter {
 
       tracklets.forEach(tracklet => {
         const future_ts = this.ts[i];
+
         xvizBuilder
           .futureInstance(this.TRACKLETS_FUTURES, future_ts)
           .polygon(tracklet.vertices)
-          .classes([tracklet.objectType])
+          .classes(tracklet.label)
           .id(tracklet.id);
       });
     }
@@ -109,6 +110,7 @@ export default class FutureTrackletsConverter {
         extruded: false,
         fill_color: '#00000080'
       })
+      
       .styleClass('Car', {
         fill_color: '#50B3FF80',
         stroke_color: '#50B3FF'
@@ -151,6 +153,7 @@ export default class FutureTrackletsConverter {
 
           // This is the tracklet position in the future, relative to the futureVehiclePose
           const futurePoseIndex = futureFrameIndex - object.firstFrame;
+          
           const pose = this._makePoseShape(object.data.poses.item[futurePoseIndex]);
 
           // Translate the future position
@@ -174,12 +177,12 @@ export default class FutureTrackletsConverter {
 
   _makePoseShape(trackletPose) {
     return {
-      x: Number(trackletPose.tx),
-      y: Number(trackletPose.ty),
-      z: Number(trackletPose.tz),
-      roll: Number(trackletPose.rx),
-      pitch: Number(trackletPose.ry),
-      yaw: Number(trackletPose.rz)
+      x: Number(trackletPose?.tx),
+      y: Number(trackletPose?.ty),
+      z: Number(trackletPose?.tz),
+      roll: Number(trackletPose?.rx),
+      pitch: Number(trackletPose?.ry),
+      yaw: Number(trackletPose?.rz)
     };
   }
 }
