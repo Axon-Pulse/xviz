@@ -20,8 +20,8 @@ import {
   _getRelativeCoordinates as getRelativeCoordinates
 } from '@xviz/builder';
 
-import {loadTracklets} from '../parsers/parse-tracklets';
-import {MOTION_PLANNING_STEPS} from './constant';
+import { loadTracklets } from '../parsers/parse-tracklets';
+import { MOTION_PLANNING_STEPS } from './constant';
 
 export default class TrackletsConverter {
   constructor(directory, getPoses) {
@@ -31,10 +31,16 @@ export default class TrackletsConverter {
 
     // laser scanner relative to GPS position
     // http://www.cvlibs.net/datasets/kitti/setup.php
+
+    // this.FIXTURE_TRANSFORM_POSE = {
+    //   x: 0.81,
+    //   y: -5.32,
+    //   z: 1.73
+    // };
     this.FIXTURE_TRANSFORM_POSE = {
-      x: 0.81,
-      y: -5.32,
-      z: 1.73
+      x: 0,
+      y: 0,
+      z: 0
     };
 
     this.TRACKLETS = '/tracklets/objects';
@@ -91,6 +97,8 @@ export default class TrackletsConverter {
       // Here you can see how the *classes* are used to tag the object
       // allowing for the *style* information to be shared across
       // categories of objects.
+      // console.log(tracklet)
+
       xvizBuilder
         .primitive(this.TRACKLETS)
         .polygon(tracklet.vertices)
@@ -98,25 +106,41 @@ export default class TrackletsConverter {
         .style({
           height: tracklet.height
         })
-        .id(`${tracklet.label} ${tracklet.id}`);
+        .id(`${tracklet.id}`);
 
       xvizBuilder
         .primitive(this.TRACKLETS_TRACKING_POINT)
-        .circle([tracklet.x, tracklet.y, tracklet.z])
-        //.position([tracklet.x, tracklet.y,  tracklet.z+1])
-        //.text(tracklet.label)
-        // .classes("icon-car")
-        // //\e916
-        .id(tracklet.id);
-      //console.log(tracklet.label)
+        .circle([tracklet.x, tracklet.y, tracklet.z], 0)
+        .id(`${tracklet.id}`);
+
       xvizBuilder
         .primitive(this.TRACKLETS_LABEL)
-        // float above the object
-        .position([tracklet.x, tracklet.y, tracklet.z + 3])
-        // .text(tracklet.id.slice(24));
-        .text(tracklet.label);
-        
-        
+        .text(`${tracklet.label}`)
+        .position([tracklet.x, tracklet.y, tracklet.z])
+        .style({ text_anchor: 'START', text_size:0 })
+        .id(`${tracklet.id}`);
+
+        xvizBuilder
+        .primitive(this.TRACKLETS_LABEL)
+        .text(`${parseInt(tracklet.confidence * 100)}`)
+        .position([tracklet.x, tracklet.y, tracklet.z])
+        .style({ text_anchor: 'START', text_size:0 })
+        .id(`${tracklet.id}`);
+
+
+
+
+
+      //console.log(tracklet.label)
+      // xvizBuilder
+      //   .primitive(this.TRACKLETS_LABEL)
+      //   // float above the object
+      //   .position([tracklet.x, tracklet.y, tracklet.z + 3])
+      //   // .text(tracklet.id.slice(24));
+      //   .text(tracklet.label);
+      // tracklet.trackletId=tracklet.data.id;
+      // tracklet.confidance  = parseInt(tracklet.confidence*100);
+
     });
 
     // object is in this frame
@@ -147,27 +171,33 @@ export default class TrackletsConverter {
       .coordinate('VEHICLE_RELATIVE')
       .streamStyle({
         extruded: true,
-        fill_color: '#00000080'
+        fill_color: '#eeeeee80',
+        height: 2.5
       })
       .styleClass('Vehicles', {
         fill_color: '#50B3FF80',
-        stroke_color: '#50B3FF'
+        stroke_color: '#50B3FF',
+        height: 2.5
       })
       .styleClass('2Wheels', {
         fill_color: '#957FCE80',
-        stroke_color: '#957FCE'
+        stroke_color: '#957FCE',
+        height: 2.5
       })
       .styleClass('Walkers', {
         fill_color: '#FFC6AF80',
-        stroke_color: '#FFC6AF'
+        stroke_color: '#FFC6AF',
+        height: 2.5
       })
       .styleClass('Van', {
         fill_color: '#5B91F480',
-        stroke_color: '#5B91F4'
+        stroke_color: '#5B91F4',
+        height: 2.5
       })
       .styleClass('Shit', {
         fill_color: '#E2E2E280',
-        stroke_color: '#E2E2E2'
+        stroke_color: '#E2E2E2',
+        height: 2.5
       })
       .pose(this.FIXTURE_TRANSFORM_POSE)
 
@@ -175,7 +205,7 @@ export default class TrackletsConverter {
       .category('primitive')
       .type('circle')
       .streamStyle({
-        radius: 0.2,
+        radius: 0,
         stroke_width: 0,
         fill_color: '#FFC043'
       })
@@ -202,6 +232,7 @@ export default class TrackletsConverter {
       })
       .coordinate('VEHICLE_RELATIVE')
       .pose(this.FIXTURE_TRANSFORM_POSE);
+
   }
 
   _convertTrackletsFrame(frameIndex) {
@@ -215,8 +246,7 @@ export default class TrackletsConverter {
           ? object.data.poses.item[poseIndex]
           : object.data.poses.item;
 
-        const {tx, ty, tz, rx, ry, rz, label} = pose;
-
+        const { tx, ty, tz, rx, ry, rz, label, h, w, l, confidence } = pose;
         const poseProps = { //TODO: add label from each pose
           label: label,
           x: Number(tx),
@@ -225,14 +255,24 @@ export default class TrackletsConverter {
           roll: Number(rx),
           pitch: Number(ry),
           yaw: Number(rz),
+          h: Number(h),
+          w: Number(w),
+          l: Number(l),
+          confidence: Number(confidence)
         };
 
-
+        const bounds = [ //TODO:needs to be done each frame
+          [-poseProps.l / 2, -poseProps.w / 2, 0],
+          [-poseProps.l / 2, poseProps.w / 2, 0],
+          [poseProps.l / 2, poseProps.w / 2, 0],
+          [poseProps.l / 2, -poseProps.w / 2, 0],
+          [-poseProps.l / 2, -poseProps.w / 2, 0]
+        ];
 
         return {
           ...object,
           ...poseProps,
-          vertices: getRelativeCoordinates(object.bounds, poseProps) //TODO: each pose has fresh bounds
+          vertices: getRelativeCoordinates(bounds, poseProps) //TODO: each pose has fresh bounds
         };
       });
   }

@@ -55,9 +55,11 @@ trap exit_script SIGINT SIGTERM
 
 # Run KITTI XVIZ conversion
 # check for both json & glb files
-# INPUT_DIR="${SCRIPT_DIR}/../data/Arbe/arbe-rosbag_2020-12-29-13-34-50_processedd_10_v6_short"
-INPUT_DIR="${SCRIPT_DIR}/../data/Arbe/bag9"
-OUTPUT_DIR="${SCRIPT_DIR}/../data/generated/arbe/bag9"
+#INPUT_DIR="${SCRIPT_DIR}/../data/Arbe/arbe-rosbag_2020-12-29-13-34-50_processedd_10_v6_short"
+#OUTPUT_DIR="${SCRIPT_DIR}/../data/generated/arbe/arbe-rosbag_2020-12-29-13-34-50_processedd_10_v6"
+
+INPUT_DIR="${SCRIPT_DIR}/../data/Arbe/bag9_v6_short"
+OUTPUT_DIR="${SCRIPT_DIR}/../data/generated/arbe/bag9_v6_short"
 
 
 if [ "$force_xviz_conversion" = "true" ] || ([ ! -f "${OUTPUT_DIR}/1-frame.json" ] && [ ! -f "${OUTPUT_DIR}/1-frame.glb" ]) ; then
@@ -76,7 +78,7 @@ show_help() {
 }
 
 # Start server & web app
-cd "${SCRIPT_DIR}/../modules/server" && ./bin/xvizserver -d "${OUTPUT_DIR}" --port 8082 &
+cd "${SCRIPT_DIR}/../modules/server" && ./bin/xvizserver -d "${OUTPUT_DIR}" --port 8083 &
 pids[1]=$!
 
 echo "##"

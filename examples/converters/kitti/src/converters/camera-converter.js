@@ -14,7 +14,7 @@
 
 import ImageConverter from './image-converter';
 
-const CAMERA_SOURCES = ['image_00', 'image_01', 'image_02', 'image_03'];
+const CAMERA_SOURCES = ['image_00'];
 
 export default class CameraConverter {
   constructor(rootDir, {disabledStreams = [], options = {}}) {

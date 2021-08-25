@@ -35,7 +35,7 @@ function parseObjectMetadata(tracklets) {
       objectType: item.objectType,
       width: Number(item.w),
       height: Number(item.h),
-      length: Number(item.l)
+      length: Number(item.l),
     };
 
     const bounds = [ //TODO:needs to be done each frame
