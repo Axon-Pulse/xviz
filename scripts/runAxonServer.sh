@@ -58,8 +58,8 @@ trap exit_script SIGINT SIGTERM
 #INPUT_DIR="${SCRIPT_DIR}/../data/Arbe/arbe-rosbag_2020-12-29-13-34-50_processedd_10_v6_short"
 #OUTPUT_DIR="${SCRIPT_DIR}/../data/generated/arbe/arbe-rosbag_2020-12-29-13-34-50_processedd_10_v6"
 
-INPUT_DIR="${SCRIPT_DIR}/../data/Arbe/bag9_v6_short"
-OUTPUT_DIR="${SCRIPT_DIR}/../data/generated/arbe/bag9_v6_short"
+INPUT_DIR="${SCRIPT_DIR}/../data/Arbe/bag6_kaz"
+OUTPUT_DIR="${SCRIPT_DIR}/../data/generated/arbe/bag6_kaz"
 
 
 if [ "$force_xviz_conversion" = "true" ] || ([ ! -f "${OUTPUT_DIR}/1-frame.json" ] && [ ! -f "${OUTPUT_DIR}/1-frame.glb" ]) ; then

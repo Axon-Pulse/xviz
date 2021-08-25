@@ -127,6 +127,13 @@ export default class TrackletsConverter {
         .style({ text_anchor: 'START', text_size:0 })
         .id(`${tracklet.id}`);
 
+        xvizBuilder
+        .primitive(this.TRACKLETS_LABEL)
+        .text(parseInt(tracklet.objectId))
+        .position([tracklet.x, tracklet.y, tracklet.z])
+        .style({ text_anchor: 'START', text_size:0 })
+        .id(`${tracklet.id}`);
+
 
 
 
@@ -147,11 +154,13 @@ export default class TrackletsConverter {
     this.data.objects
       .filter(object => messageNumber >= object.firstFrame && messageNumber < object.lastFrame)
       .forEach(object => {
+        //console.log(object.data.id)
         const objectTrajectory = getObjectTrajectory({
           targetObject: object,
           objectFrames: this.trackletFrames,
           poseFrames: this.poses,
           startFrame: messageNumber,
+          //objectId:object.data.id,
           endFrame: Math.min(
             messageNumber + MOTION_PLANNING_STEPS,
             object.lastFrame,
@@ -258,7 +267,8 @@ export default class TrackletsConverter {
           h: Number(h),
           w: Number(w),
           l: Number(l),
-          confidence: Number(confidence)
+          confidence: Number(confidence),
+          objectId:Number(object.data.id)
         };
 
         const bounds = [ //TODO:needs to be done each frame
