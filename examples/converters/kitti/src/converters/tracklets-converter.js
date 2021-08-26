@@ -117,22 +117,22 @@ export default class TrackletsConverter {
         .primitive(this.TRACKLETS_LABEL)
         .text(`${tracklet.label}`)
         .position([tracklet.x, tracklet.y, tracklet.z])
-        .style({ text_anchor: 'START', text_size:0 })
+        .style({ text_anchor: 'START', text_size: 0 })
         .id(`${tracklet.id}`);
 
-        xvizBuilder
+      xvizBuilder
         .primitive(this.TRACKLETS_LABEL)
         .text(`${parseInt(tracklet.confidence * 100)}`)
         .position([tracklet.x, tracklet.y, tracklet.z])
-        .style({ text_anchor: 'START', text_size:0 })
+        .style({ text_anchor: 'START', text_size: 0 })
         .id(`${tracklet.id}`);
 
-        //  xvizBuilder
-        //  .primitive(this.TRACKLETS_LABEL)
-        //  .text(parseInt(tracklet.objectId))
-        //  .position([tracklet.x, tracklet.y, tracklet.z])
-        //  .style({ text_anchor: 'START', text_size:0 })
-        //  .id(`${tracklet.id}`);
+      xvizBuilder
+        .primitive(this.TRACKLETS_LABEL)
+        .text(`${parseInt(tracklet.objectId)}`)
+        .position([tracklet.x, tracklet.y, tracklet.z])
+        .style({ text_anchor: 'START', text_size: 0 })
+        .id(`${tracklet.id}`);
 
 
 
@@ -268,7 +268,7 @@ export default class TrackletsConverter {
           w: Number(w),
           l: Number(l),
           confidence: Number(confidence),
-          objectId:Number(object.data.id)
+          objectId: Number(object.data.id)
         };
 
         const bounds = [ //TODO:needs to be done each frame
