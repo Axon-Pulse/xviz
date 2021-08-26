@@ -16,11 +16,11 @@
 import uuid from 'uuid/v4';
 
 import BaseConverter from './base-converter';
-import {loadLidarData} from '../parsers/parse-lidar-points';
+import { loadLidarData } from '../parsers/parse-lidar-points';
 
 // load file
 export default class LidarConverter extends BaseConverter {
-  constructor(rootDir, streamDir, {disabledStreams = []} = {}) {
+  constructor(rootDir, streamDir, { disabledStreams = [] } = {}) {
     super(rootDir, streamDir);
 
     this.LIDAR_POINTS = '/lidar/points';
@@ -35,7 +35,7 @@ export default class LidarConverter extends BaseConverter {
       return;
     }
 
-    const {data} = await this.loadMessage(messageNumber);
+    const { data } = await this.loadMessage(messageNumber);
     const lidarData = loadLidarData(data);
 
     xvizBuilder
@@ -52,7 +52,7 @@ export default class LidarConverter extends BaseConverter {
       .type('point')
       .streamStyle({
         fill_color: '#00a',
-        radius_pixels: 1.1
+        radius_pixels: 1.3
       })
       // laser scanner relative to GPS position
       // http://www.cvlibs.net/datasets/kitti/setup.php
