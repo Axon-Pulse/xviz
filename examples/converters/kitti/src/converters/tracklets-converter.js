@@ -129,7 +129,7 @@ export default class TrackletsConverter {
 
       xvizBuilder
         .primitive(this.TRACKLETS_LABEL)
-        .text(parseInt(tracklet.objectId))
+        .text(`${parseInt(tracklet.objectId)}`)
         .position([tracklet.x, tracklet.y, tracklet.z])
         .style({ text_anchor: 'START', text_size: 0 })
         .id(`${tracklet.id}`);
