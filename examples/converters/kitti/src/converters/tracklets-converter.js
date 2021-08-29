@@ -184,23 +184,23 @@ export default class TrackletsConverter {
         height: 2.5
       })
       .styleClass('Vehicles', {
-        fill_color: '#50B3FF80',
-        stroke_color: '#50B3FF',
+        fill_color: '#3B8FE380',
+        stroke_color: '#3B8FE3',
         height: 2.5
       })
       .styleClass('2Wheels', {
-        fill_color: '#957FCE80',
-        stroke_color: '#957FCE',
+        fill_color: '#FF853380',
+        stroke_color: '#FF8533',
         height: 2.5
       })
       .styleClass('Walkers', {
-        fill_color: '#FFC6AF80',
-        stroke_color: '#FFC6AF',
+        fill_color: '#D8E2DC80',
+        stroke_color: '#D8E2DC',
         height: 2.5
       })
-      .styleClass('Van', {
-        fill_color: '#5B91F480',
-        stroke_color: '#5B91F4',
+      .styleClass('Trucks', {
+        fill_color: '#9C0D3880',
+        stroke_color: '#9C0D38',
         height: 2.5
       })
       .styleClass('Shit', {
