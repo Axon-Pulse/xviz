@@ -16,7 +16,7 @@
  * Parse LiDar data (stored in velodyne_points dir),
  */
 
-import {Parser as BinaryParser} from 'binary-parser';
+import { Parser as BinaryParser } from 'binary-parser';
 const parser = new BinaryParser().floatle();
 
 function readBinaryData(binary) {
@@ -41,31 +41,31 @@ export function loadLidarData(data) {
   const colors = new Array(size);
 
   for (let i = 0; i < size; i++) {
-    positions[i] = float.subarray(i * 4 , i * 4 + 3);
+    positions[i] = float.subarray(i * 4, i * 4 + 3);
 
-    // const reflectance = Math.min(float[i * 4 + 3], 3);
+    const reflectance = Math.min(float[i * 4 + 3], 3);
     // colors[i] = [80 + reflectance * 80, reflectance * 80, reflectance * 60];
-    colors[i] = [221,221,221];
+    colors[i] = [225 * (1 - reflectance), 225 * (1 - reflectance), 225 * (1 - reflectance)];
   }
 
 
 
-//   let x ='';
-//   let y ='';
-// //  let z = '';
-//   for (let i = 0; i < size; i++) {
-//     positions[i] = float.subarray(i * 4 , i * 4 + 3);
-//     const reflectance = Math.min(float[i * 4 + 3], 3);
-//     colors[i] = [80 + reflectance * 80, reflectance * 80, reflectance * 60];    
-//      x= positions[i][0];
-//     //     y= positions[i][1];
-//     //    z= positions[i][2];
-//      positions[i][0]=y;
-//      positions[i][1]=x;
-//  }
+  //   let x ='';
+  //   let y ='';
+  // //  let z = '';
+  //   for (let i = 0; i < size; i++) {
+  //     positions[i] = float.subarray(i * 4 , i * 4 + 3);
+  //     const reflectance = Math.min(float[i * 4 + 3], 3);
+  //     colors[i] = [80 + reflectance * 80, reflectance * 80, reflectance * 60];    
+  //      x= positions[i][0];
+  //     //     y= positions[i][1];
+  //     //    z= positions[i][2];
+  //      positions[i][0]=y;
+  //      positions[i][1]=x;
+  //  }
 
 
 
 
-  return {positions, colors};
+  return { positions, colors };
 }
