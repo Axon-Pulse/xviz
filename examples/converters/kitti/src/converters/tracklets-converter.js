@@ -32,16 +32,16 @@ export default class TrackletsConverter {
     // laser scanner relative to GPS position
     // http://www.cvlibs.net/datasets/kitti/setup.php
 
-    // this.FIXTURE_TRANSFORM_POSE = {
-    //   x: 0.81,
-    //   y: -5.32,
-    //   z: 1.73
-    // };
-    this.FIXTURE_TRANSFORM_POSE = {
-      x: 0,
-      y: 0,
-      z: 0
-    };
+     this.FIXTURE_TRANSFORM_POSE = {
+       x: 0.81,
+       y: -5.32,
+       z: 1.73
+     };
+    //this.FIXTURE_TRANSFORM_POSE = {
+    //  x: 0,
+    //  y: 0,
+    //  z: 0
+    //};
 
     this.TRACKLETS = '/tracklets/objects';
     this.TRACKLETS_TRAJECTORY = '/tracklets/trajectory';
@@ -194,8 +194,8 @@ export default class TrackletsConverter {
         height: 2.5
       })
       .styleClass('Walkers', {
-        fill_color: '#D8E2DC80',
-        stroke_color: '#D8E2DC',
+        fill_color: '#8c66af80',
+        stroke_color: '#8c66af',
         height: 2.5
       })
       .styleClass('Trucks', {
@@ -203,11 +203,18 @@ export default class TrackletsConverter {
         stroke_color: '#9C0D38',
         height: 2.5
       })
-      .styleClass('Shit', {
-        fill_color: '#E2E2E280',
-        stroke_color: '#E2E2E2',
+       .styleClass('Motorcycle', {
+         fill_color: '#E4412680',
+         stroke_color: '#E44126',
+         height: 2.5
+       })
+       .styleClass('Bicycle', {
+        fill_color: '#FF853380',
+        stroke_color: '#FF8533',
         height: 2.5
       })
+
+      
       .pose(this.FIXTURE_TRANSFORM_POSE)
 
       .stream(this.TRACKLETS_TRACKING_POINT)
